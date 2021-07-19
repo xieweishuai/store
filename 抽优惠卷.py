@@ -19,9 +19,9 @@ mycart = []
 #抽优惠卷
 sum = input("请问是否抽优惠卷，请输入是或否：")
 if sum == "是":
-    data = random.randint(0,29)
+    data = random.randint(0,29) #0~9为老干妈七折优惠卷，10~29为联想一折优惠卷
     data = int(data)
-
+    data = 10
 # 4.买东西
 i = 0
 while i <= 20:
@@ -39,7 +39,20 @@ while i <= 20:
         else:
             # 4.5 判断您的余额是否足够
             if money < shop[chose][1]:
-                print("对不起，穷鬼，您的钱不够！请到其他超市买东西去！")
+                if data >= 0 and data < 10 and chose == 6 and money >= shop[chose][1]*0.7:
+                    mycart.append(shop[chose])
+                    print("恭喜使用老干妈七折优惠卷")
+                    money = money - shop[chose][1]*0.7
+                    data = 30
+                    print("恭喜，成功添加购物车！您的余额还剩￥：", money)
+                elif data <= 29 and data > 9 and chose == 2 and money >= shop[chose][1]*0.1:
+                    mycart.append(shop[chose])
+                    print("恭喜使用联想一折优惠卷")
+                    money = money - shop[chose][1]*0.1
+                    data = 30
+                    print("恭喜，成功添加购物车！您的余额还剩￥：", money)
+                else:
+                    print("对不起，穷鬼，您的钱不够！请到其他超市买东西去！")
             else:
                 # 4.6 将商品添加到购物车 ，余额减去对应的钱
                 mycart.append(shop[chose])
@@ -48,7 +61,7 @@ while i <= 20:
                     money = money - shop[chose][1]*0.7
                     data = 30
                 elif data <= 29 and data > 9 and chose == 2:
-                    print("恭喜使用联想一折优惠卷卷")
+                    print("恭喜使用联想一折优惠卷")
                     money = money - shop[chose][1]*0.1
                     data = 30
                 else:
